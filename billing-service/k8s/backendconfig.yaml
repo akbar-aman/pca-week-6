@@ -1,0 +1,14 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: billing-backendconfig
+spec:
+  healthCheck:
+    checkIntervalSec: 30        # how often to check
+    timeoutSec: 10              # request timeout
+    healthyThreshold: 1
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /health        # important: matches your Flask app route
+    port: 8080
+
