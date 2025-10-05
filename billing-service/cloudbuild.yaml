@@ -9,9 +9,12 @@ steps:
 
 - id: Deploy
   name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'k8s/']
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      gcloud container clusters get-credentials telecom-gke --zone us-central1-a --project $PROJECT_ID
+      kubectl apply -f k8s/
 
 images:
 - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repo/billing-service:${_SHORT_SHA}'
